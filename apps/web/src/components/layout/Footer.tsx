@@ -6,7 +6,7 @@ export function Footer() {
       <Container>
         <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
           <p className="text-sm text-muted">
-            © {new Date().getFullYear()} Jordan Mercer. All rights reserved.
+            © {new Date().getFullYear()} Subodh Rayamajhee. All rights reserved.
           </p>
           <p className="text-xs text-muted">Built with care.</p>
         </div>

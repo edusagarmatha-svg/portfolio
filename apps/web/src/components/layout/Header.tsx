@@ -3,12 +3,14 @@ import { Menu, X } from "lucide-react";
 import { Container } from "./Container";
 
 const navLinks = [
-  { href: "#about", label: "About" },
-  { href: "#experience", label: "Experience" },
-  { href: "#projects", label: "Projects" },
-  { href: "#skills", label: "Skills" },
-  { href: "#education", label: "Education" },
-  { href: "#contact", label: "Contact" },
+  { href: "#top", label: "HOME" },
+  { href: "#about", label: "ABOUT" },
+  { href: "#experience", label: "EXPERIENCE" },
+  { href: "#leadership", label: "LEADERSHIP" },
+  { href: "#expertise", label: "EXPERTISE" },
+  { href: "#education", label: "EDUCATION" },
+  { href: "#insights", label: "INSIGHTS" },
+  { href: "#contact", label: "CONTACT" },
 ];
 
 export function Header() {
@@ -19,7 +21,7 @@ export function Header() {
       <Container>
         <div className="flex h-16 items-center justify-between">
           <a href="#top" className="text-sm font-semibold tracking-tight text-text">
-            Jordan Mercer
+            Subodh Rayamajhee
           </a>
           <nav className="hidden items-center gap-7 md:flex" aria-label="Primary">
             {navLinks.map((l) => (

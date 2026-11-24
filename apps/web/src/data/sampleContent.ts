@@ -4,24 +4,23 @@
 // Do not treat as production data.
 
 export const sampleProfile = {
-  fullName: "Jordan Mercer",
-  professionalTitle: "Senior Product Designer & Frontend Engineer",
+  fullName: "Subodh Rayamajhee",
+  professionalTitle: "Entrepreneur | Educator | Business Leader",
   introduction:
-    "I design and build calm, durable digital products for teams that care about craft.",
+    "Driving institutional growth, educational development, and community empowerment through leadership, entrepreneurship, and strategic management.",
   profileImage: null as string | null,
   resumeUrl: null as string | null,
-  email: "hello@jordanmercer.com",
-  phone: "+1 (415) 555-0142",
-  location: "San Francisco, CA",
+  email: "subodh@gmail.com",
+  phone: "",
+  location: "Nepal",
   social: [
     { label: "LinkedIn", url: "https://linkedin.com" },
-    { label: "GitHub", url: "https://github.com" },
   ],
 };
 
 export const sampleAbout = {
   biography:
-    "With over nine years of experience across product design and frontend engineering, I help organisations ship interfaces that are clear, accessible, and built to last. I care about typographic detail, honest interaction design, and code that stays readable.",
+    "I am an entrepreneur, educator, and organizational leader with professional experience across the education sector, cooperative management, and institutional administration. As the Chief Executive Officer of Sagarmatha Education and Research Academy (SERA), I have been involved in leading educational initiatives and supporting institutional growth. My professional journey also includes leadership within cooperative and business environments, with a focus on organizational development, strategic planning, and community empowerment.",
 };
 
 export const sampleExperience = [
@@ -79,12 +78,42 @@ export const sampleProjects = [
 ];
 
 export const sampleSkills = [
-  { id: "1", name: "TypeScript", category: "Engineering", proficiency: "Advanced" },
-  { id: "2", name: "React", category: "Engineering", proficiency: "Advanced" },
-  { id: "3", name: "Tailwind CSS", category: "Engineering", proficiency: "Advanced" },
-  { id: "4", name: "Figma", category: "Design", proficiency: "Advanced" },
-  { id: "5", name: "Design Systems", category: "Design", proficiency: "Expert" },
-  { id: "6", name: "Accessibility", category: "Design", proficiency: "Advanced" },
+  { id: "1", name: "Strategic Management", category: "Leadership", proficiency: "Expert" },
+  { id: "2", name: "Institutional Development", category: "Leadership", proficiency: "Expert" },
+  { id: "3", name: "Entrepreneurship", category: "Business", proficiency: "Advanced" },
+  { id: "4", name: "Cooperative Management", category: "Business", proficiency: "Advanced" },
+  { id: "5", name: "Educational Administration", category: "Education", proficiency: "Expert" },
+  { id: "6", name: "Community Empowerment", category: "Social Impact", proficiency: "Advanced" },
+];
+
+export const sampleLeadership = [
+  {
+    id: "1",
+    title: "Chief Executive Officer",
+    organization: "Sagarmatha Education and Research Academy (SERA)",
+    description:
+      "Leading educational initiatives and supporting institutional growth through strategic planning and organizational development.",
+  },
+  {
+    id: "2",
+    title: "Leadership Roles in Cooperative & Business Sectors",
+    organization: "Cooperative & Business Environments",
+    description:
+      "Driving organizational development, strategic planning, and community empowerment across cooperative and business environments.",
+  },
+];
+
+export const sampleInsights = [
+  {
+    id: "1",
+    title: "Building Institutions That Last",
+    excerpt: "Reflections on leadership, institutional growth, and the long-term work of building organizations that serve communities.",
+  },
+  {
+    id: "2",
+    title: "Education as a Catalyst for Community Empowerment",
+    excerpt: "How educational institutions can drive broader social and economic development beyond the classroom.",
+  },
 ];
 
 export const sampleEducation = [

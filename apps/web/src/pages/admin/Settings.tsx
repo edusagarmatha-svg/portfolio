@@ -6,7 +6,7 @@ import { Input } from "../../components/ui/Input";
 import { Card } from "../../components/ui/Card";
 import type { SocialLink, SectionVisibility, Seo } from "../../lib/useSettings";
 
-const SECTION_KEYS = ["hero", "about", "experience", "projects", "skills", "education", "certifications", "services", "testimonials", "contact"];
+const SECTION_KEYS = ["hero", "about", "experience", "leadership", "expertise", "education", "insights", "contact"];
 
 export function SettingsAdmin() {
   const { show } = useToast();

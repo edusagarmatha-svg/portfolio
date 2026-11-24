@@ -316,3 +316,18 @@ Awaiting approval to proceed to Milestone 1 (project foundation).
 - Add real Cloudinary credentials to enable uploads.
 - Choose hosting providers and deploy frontend, backend, and database.
 - Expand automated tests for critical flows (auth, ownership, CRUD) in future iterations.
+
+## Restructure — Public Portfolio Navigation & Sections (completed)
+
+### What was done
+
+- Public navigation restructured to: HOME, ABOUT, EXPERIENCE, LEADERSHIP, EXPERTISE, EDUCATION, INSIGHTS, CONTACT.
+- Removed Projects, Certifications, Services, Testimonials from public navigation and section structure.
+- Added Leadership and Insights sections.
+- Renamed Skills to Expertise.
+- Updated sample content and copy for Subodh Rayamajhee (Entrepreneur | Educator | Business Leader).
+- Updated settings section visibility keys and footer/header branding.
+
+### Verification
+
+- `npm run typecheck` and `npm run build` (web): passed.
