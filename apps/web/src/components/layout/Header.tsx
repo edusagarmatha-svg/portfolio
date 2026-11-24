@@ -17,7 +17,7 @@ export function Header() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-border bg-forest">
+    <header className="sticky top-0 z-40 bg-forest">
       <Container>
         <div className="flex h-16 items-center justify-between">
           <a href="#top" className="text-sm font-semibold tracking-tight text-white">

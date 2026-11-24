@@ -23,7 +23,7 @@ export function About() {
             <p className="text-body leading-relaxed text-charcoal/90">
               {biography}
             </p>
-            <div className="mt-4 gold-divider" />
+            <div className="mt-4 my-4 gold-divider" />
           </div>
         </div>
       </Container>

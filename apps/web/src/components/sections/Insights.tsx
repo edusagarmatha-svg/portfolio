@@ -17,6 +17,7 @@ export function Insights() {
           ))}
         </div>
       </Container>
+        <div className="my-4 gold-divider" />
     </Section>
   );
 }

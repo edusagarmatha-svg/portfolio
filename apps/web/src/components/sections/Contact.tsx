@@ -78,12 +78,13 @@ export function Contact() {
               </div>
               {error && <p className="text-sm text-red-600">{error}</p>}
               {status === "sent" && <p className="text-sm text-accent">Message sent. Thank you!</p>}
-              <button type="submit" disabled={status === "sending"} className="inline-flex items-center rounded-md bg-accent px-5 py-2.5 text-sm font-medium text-white transition hover:opacity-90 disabled:opacity-50">
+              <button type="submit" disabled={status === "sending"} className="inline-flex items-center rounded-md bg-forest px-5 py-2.5 text-sm font-medium text-cream transition hover:opacity-90 disabled:opacity-50">
                 {status === "sending" ? "Sending…" : "Send message"}
               </button>
             </form>
           </div>
         </div>
+        <div className="my-4 gold-divider" />
       </Container>
     </Section>
   );

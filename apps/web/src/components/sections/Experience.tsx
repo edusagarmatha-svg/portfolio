@@ -67,6 +67,7 @@ export function Experience() {
             </ol>
           </div>
         </div>
+        <div className="my-4 gold-divider" />
       </Container>
     </Section>
   );

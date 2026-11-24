@@ -10,8 +10,7 @@ export function Section({
   className?: string;
 }) {
   return (
-    <section id={id} className={`py-20 sm:py-28 ${className}`}>
-      {children}
-    </section>
+    <section id={id} className={`py-16 sm:py-24 ${className}`}>
+      {children}</section>
   );
 }
