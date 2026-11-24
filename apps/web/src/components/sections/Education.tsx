@@ -45,6 +45,7 @@ export function Education() {
               </article>
             ))}
           </div>
+            <div className="my-6 gold-divider" />
         ) : (
           <p className="mt-10 text-muted">No education data available</p>
         )}

@@ -18,10 +18,10 @@ export function Expertise() {
               return acc;
             }, {})).map(([cat, items]) => (
               <div key={cat}>
-                <h3 className="text-sm font-semibold text-text">{cat}</h3>
+                <h3 className="text-base font-semibold text-charcoal">{cat}</h3>
                 <ul className="mt-3 space-y-2">
                   {items.map((s: any) => (
-                    <li key={s.id} className="flex items-center text-sm text-text">
+                    <li key={s.id} className="flex items-center text-base font-display text-charcoal">
                       <span className="font-display">{s.name}</span>
                     </li>
                   ))}
@@ -29,6 +29,7 @@ export function Expertise() {
               </div>
             ))}
           </div>
+            <div className="my-6 gold-divider" />
         ) : (
           <p className="mt-10 text-muted">No expertise data available</p>
         )}

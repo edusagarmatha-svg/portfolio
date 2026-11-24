@@ -15,7 +15,7 @@ export function Hero() {
       id="top"
       className="min-h-[100svh] bg-forest overflow-hidden"
     >
-      <div className="grid grid-cols-1 lg:grid-cols-[52fr_48fr] gap-16 lg:gap-24 mx-auto w-full max-w-6xl px-6 lg:px-16 relative pt-20">
+      <div className="grid grid-cols-1 lg:grid-cols-[56fr_44fr] gap-16 lg:gap-24 mx-auto w-full max-w-6xl px-6 lg:px-16 relative pt-20">
         {/* Text column (left on desktop) */}
         <div>
           <p className="text-sm font-medium uppercase tracking-[0.18em] text-gold animate-fade-up">
