@@ -1,5 +1,6 @@
 import type { Request, Response, NextFunction } from "express";
 import { ZodError } from "zod";
+import multer from "multer";
 
 export class AppError extends Error {
   constructor(
@@ -18,6 +19,14 @@ export function errorHandler(
   res: Response,
   _next: NextFunction,
 ) {
+  if (err instanceof multer.MulterError) {
+    const status = err.code === "LIMIT_FILE_SIZE" ? 413 : 400;
+    return res.status(status).json({
+      success: false,
+      error: { code: err.code, message: err.message },
+    });
+  }
+
   if (err instanceof ZodError) {
     return res.status(400).json({
       success: false,

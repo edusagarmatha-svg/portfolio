@@ -52,6 +52,8 @@ Certification, Service, Testimonial, ContactMessage, SiteSetting.
 4. Admin dashboard foundation — completed
 5. Profile and About management — completed
 6. Projects and Experience — completed
+7. Skills, Education, and Certifications — completed
+8. Cloudinary media management — completed
 2. Authentication and authorization — not started
 3. Public portfolio shell — not started
 4. Admin dashboard foundation — not started
@@ -208,3 +210,41 @@ Awaiting approval to proceed to Milestone 1 (project foundation).
 ### Notes / Next
 
 - Milestone 7 will implement Skills, Education, and Certifications.
+
+## Milestone 7 — Skills, Education, and Certifications (completed)
+
+### What was done
+
+- Backend modules for Skills, Education, Certifications with CRUD and public endpoints.
+- Frontend admin pages for each module.
+- Public sections now fetch from API with sample fallback.
+
+### Verification
+
+- `npm run typecheck` and `npm run build` (web + api): passed.
+
+### Notes / Next
+
+- Milestone 8 will implement Cloudinary media management.
+
+## Milestone 8 — Cloudinary Media Management (completed)
+
+### What was done
+
+- Backend:
+  - `POST /api/v1/admin/media/upload` (protected, multipart, validated type/size) uploads to Cloudinary.
+  - `DELETE /api/v1/admin/media/:publicId` (protected) removes asset.
+  - Multer errors mapped in centralized error handler.
+- Frontend:
+  - Reusable `ImageUpload` component with preview, upload, remove.
+  - Integrated into Profile (profile image) and Projects (cover image).
+
+### Verification
+
+- `npm run typecheck` and `npm run build` (web + api): passed.
+- Upload endpoint returns 503 when Cloudinary env vars are missing (clear error).
+
+### Notes / Next
+
+- Cloudinary credentials must be added to `apps/api/.env` to enable uploads.
+- Milestone 9 will implement contact form and messages inbox.

@@ -4,6 +4,7 @@ import { useToast } from "../../components/ui/Toast";
 import { Button } from "../../components/ui/Button";
 import { Input } from "../../components/ui/Input";
 import { Card } from "../../components/ui/Card";
+import { ImageUpload } from "../../components/ui/ImageUpload";
 
 type Item = {
   id: string;
@@ -173,9 +174,8 @@ export function ProjectsAdmin() {
               <label className="text-sm font-medium">Technologies (comma-separated)</label>
               <Input className="mt-1.5" value={form.technologies} onChange={(e) => set("technologies", e.target.value)} />
             </div>
-            <div>
-              <label className="text-sm font-medium">Cover image URL</label>
-              <Input className="mt-1.5" value={form.coverImageUrl} onChange={(e) => set("coverImageUrl", e.target.value)} />
+            <div className="sm:col-span-2">
+              <ImageUpload label="Cover image" value={form.coverImageUrl} onChange={(url) => set("coverImageUrl", url)} />
             </div>
             <div>
               <label className="text-sm font-medium">Live URL</label>

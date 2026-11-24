@@ -4,6 +4,7 @@ import { useToast } from "../../components/ui/Toast";
 import { Button } from "../../components/ui/Button";
 import { Input } from "../../components/ui/Input";
 import { Card } from "../../components/ui/Card";
+import { ImageUpload } from "../../components/ui/ImageUpload";
 
 type ProfileForm = {
   fullName: string;
@@ -131,9 +132,8 @@ export function Profile() {
               <label className="text-sm font-medium">Location</label>
               <Input className="mt-1.5" value={form.location} onChange={(e) => set("location", e.target.value)} />
             </div>
-            <div>
-              <label className="text-sm font-medium">Profile image URL</label>
-              <Input className="mt-1.5" value={form.profileImageUrl} onChange={(e) => set("profileImageUrl", e.target.value)} />
+            <div className="sm:col-span-2">
+              <ImageUpload label="Profile image" value={form.profileImageUrl} onChange={(url) => set("profileImageUrl", url)} />
             </div>
             <div className="sm:col-span-2">
               <label className="text-sm font-medium">Résumé URL</label>

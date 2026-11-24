@@ -8,6 +8,9 @@ const nav = [
   { to: "/admin/profile", label: "Profile" },
   { to: "/admin/projects", label: "Projects" },
   { to: "/admin/experience", label: "Experience" },
+  { to: "/admin/skills", label: "Skills" },
+  { to: "/admin/education", label: "Education" },
+  { to: "/admin/certifications", label: "Certifications" },
   { to: "/admin/messages", label: "Messages" },
 ];
 

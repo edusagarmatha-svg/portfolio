@@ -10,6 +10,10 @@ import { dashboardRouter } from "./modules/dashboard/dashboard.routes.js";
 import { publicPortfolioRouter, adminProfileRouter } from "./modules/profile/profile.routes.js";
 import { publicExperienceRouter, adminExperienceRouter } from "./modules/experience/experience.routes.js";
 import { publicProjectsRouter, adminProjectsRouter } from "./modules/projects/projects.routes.js";
+import { publicSkillsRouter, adminSkillsRouter } from "./modules/skills/skills.routes.js";
+import { publicEducationRouter, adminEducationRouter } from "./modules/education/education.routes.js";
+import { publicCertificationsRouter, adminCertificationsRouter } from "./modules/certifications/certifications.routes.js";
+import { adminMediaRouter } from "./modules/media/media.routes.js";
 import { errorHandler } from "./middleware/error-handler.js";
 
 export function createApp() {
@@ -44,8 +48,15 @@ export function createApp() {
   app.use("/api/v1/public/portfolio", publicPortfolioRouter);
   app.use("/api/v1/public/experience", publicExperienceRouter);
   app.use("/api/v1/public/projects", publicProjectsRouter);
+  app.use("/api/v1/public/skills", publicSkillsRouter);
+  app.use("/api/v1/public/education", publicEducationRouter);
+  app.use("/api/v1/public/certifications", publicCertificationsRouter);
   app.use("/api/v1/admin/experience", adminExperienceRouter);
   app.use("/api/v1/admin/projects", adminProjectsRouter);
+  app.use("/api/v1/admin/skills", adminSkillsRouter);
+  app.use("/api/v1/admin/education", adminEducationRouter);
+  app.use("/api/v1/admin/certifications", adminCertificationsRouter);
+  app.use("/api/v1/admin/media", adminMediaRouter);
 
   app.use((_req, res) => {
     res.status(404).json({ success: false, error: { code: "NOT_FOUND", message: "Route not found" } });
