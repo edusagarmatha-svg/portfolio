@@ -17,10 +17,10 @@ export function Header() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-border bg-bg/80 backdrop-blur">
+    <header className="sticky top-0 z-40 border-b border-border bg-forest">
       <Container>
         <div className="flex h-16 items-center justify-between">
-          <a href="#top" className="text-sm font-semibold tracking-tight text-text">
+          <a href="#top" className="text-sm font-semibold tracking-tight text-white">
             Subodh Rayamajhee
           </a>
           <nav className="hidden items-center gap-7 md:flex" aria-label="Primary">
@@ -28,7 +28,7 @@ export function Header() {
               <a
                 key={l.href}
                 href={l.href}
-                className="text-sm text-muted transition-colors hover:text-text"
+                className="text-sm text-cream transition-colors hover:text-cream"
               >
                 {l.label}
               </a>
@@ -36,7 +36,7 @@ export function Header() {
           </nav>
           <button
             type="button"
-            className="md:hidden text-text"
+            className="md:hidden text-white"
             aria-label="Toggle menu"
             onClick={() => setOpen((v) => !v)}
           >
@@ -50,7 +50,7 @@ export function Header() {
                 key={l.href}
                 href={l.href}
                 onClick={() => setOpen(false)}
-                className="text-sm text-muted hover:text-text"
+                className="text-sm text-cream hover:text-cream"
               >
                 {l.label}
               </a>

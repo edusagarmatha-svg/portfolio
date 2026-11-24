@@ -57,7 +57,7 @@ export function Contact() {
             </ul>
           </div>
           <div className="lg:col-span-7">
-            <form className="space-y-4 rounded-md border border-border bg-surface p-6" onSubmit={handleSubmit}>
+            <form className="space-y-4 rounded-md border border-border bg-cream p-6" onSubmit={handleSubmit}>
               <div className="grid gap-4 sm:grid-cols-2">
                 <div>
                   <label className="text-sm font-medium text-text" htmlFor="senderName">Name</label>

@@ -4,7 +4,7 @@ import { sampleLeadership } from "../../data/sampleContent";
 
 export function Leadership() {
   return (
-    <Section id="leadership">
+    <Section id="leadership" className="bg-cream">
       <Container>
         <div className="grid gap-8 lg:grid-cols-12">
           <div className="lg:col-span-4">

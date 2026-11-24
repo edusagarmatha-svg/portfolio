@@ -4,7 +4,7 @@ import { sampleInsights } from "../../data/sampleContent";
 
 export function Insights() {
   return (
-    <Section id="insights" className="bg-surface">
+    <Section id="insights" className="bg-cream">
       <Container>
         <h2 className="text-sm font-medium uppercase tracking-[0.18em] text-accent">Insights</h2>
         <p className="mt-3 text-2xl font-semibold tracking-tight">Thoughts and perspectives</p>
