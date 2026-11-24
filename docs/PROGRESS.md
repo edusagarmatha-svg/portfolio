@@ -54,6 +54,9 @@ Certification, Service, Testimonial, ContactMessage, SiteSetting.
 6. Projects and Experience — completed
 7. Skills, Education, and Certifications — completed
 8. Cloudinary media management — completed
+9. Contact and optional sections — completed
+10. Settings and SEO — completed
+11. Quality assurance and deployment preparation — completed
 2. Authentication and authorization — not started
 3. Public portfolio shell — not started
 4. Admin dashboard foundation — not started
@@ -248,3 +251,68 @@ Awaiting approval to proceed to Milestone 1 (project foundation).
 
 - Cloudinary credentials must be added to `apps/api/.env` to enable uploads.
 - Milestone 9 will implement contact form and messages inbox.
+
+## Milestone 9 — Contact and Optional Sections (completed)
+
+### What was done
+
+- Backend:
+  - `POST /api/v1/public/contact` (rate limited) stores contact messages.
+  - Admin messages inbox: list, mark read/unread, delete.
+  - CRUD + public endpoints for Services and Testimonials.
+- Frontend:
+  - Contact form submits to API.
+  - Admin Messages page.
+  - Admin Services and Testimonials pages.
+  - Public Services/Testimonials sections fetch from API.
+
+### Verification
+
+- `npm run typecheck` and `npm run build` (web + api): passed.
+
+### Notes / Next
+
+- Milestone 10 will implement Settings and SEO (social links, section visibility, metadata, sitemap).
+
+## Milestone 10 — Settings and SEO (completed)
+
+### What was done
+
+- Backend:
+  - Site settings endpoints (social links, section visibility, SEO metadata).
+- Frontend:
+  - Admin Settings page.
+  - Public sections rendered based on visibility settings.
+  - SEO meta tags via react-helmet-async.
+  - Static robots.txt and sitemap.xml.
+
+### Verification
+
+- `npm run typecheck` and `npm run build` (web + api): passed.
+
+### Notes / Next
+
+- Milestone 11 will focus on QA, authorization review, responsive/accessibility checks, and deployment prep.
+
+## Milestone 11 — Quality Assurance and Deployment Preparation (completed)
+
+### What was done
+
+- Final typecheck and builds for both apps: passed.
+- Backend tests: 5 passed.
+- Authorization review: all admin routes enforce `authenticate`; public endpoints return only published content.
+- Responsive layouts and accessibility basics reviewed in code (semantic landmarks, focus states, reduced-motion).
+- Environment templates updated (`.env.example`).
+- Deployment target remains to be decided; production env vars documented.
+
+### Verification
+
+- `npm run typecheck` (api + web): passed.
+- `npm run build` (api + web): passed.
+- `npm test` (api): 5 passed.
+
+### Remaining / Notes
+
+- Add real Cloudinary credentials to enable uploads.
+- Choose hosting providers and deploy frontend, backend, and database.
+- Expand automated tests for critical flows (auth, ownership, CRUD) in future iterations.

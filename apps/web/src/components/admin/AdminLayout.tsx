@@ -11,7 +11,10 @@ const nav = [
   { to: "/admin/skills", label: "Skills" },
   { to: "/admin/education", label: "Education" },
   { to: "/admin/certifications", label: "Certifications" },
+  { to: "/admin/services", label: "Services" },
+  { to: "/admin/testimonials", label: "Testimonials" },
   { to: "/admin/messages", label: "Messages" },
+  { to: "/admin/settings", label: "Settings" },
 ];
 
 export function AdminLayout() {

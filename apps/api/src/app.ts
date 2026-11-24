@@ -14,6 +14,10 @@ import { publicSkillsRouter, adminSkillsRouter } from "./modules/skills/skills.r
 import { publicEducationRouter, adminEducationRouter } from "./modules/education/education.routes.js";
 import { publicCertificationsRouter, adminCertificationsRouter } from "./modules/certifications/certifications.routes.js";
 import { adminMediaRouter } from "./modules/media/media.routes.js";
+import { publicContactRouter, adminMessagesRouter } from "./modules/contact/contact.routes.js";
+import { publicSettingsRouter, adminSettingsRouter } from "./modules/settings/settings.routes.js";
+import { publicServicesRouter, adminServicesRouter } from "./modules/services/services.routes.js";
+import { publicTestimonialsRouter, adminTestimonialsRouter } from "./modules/testimonials/testimonials.routes.js";
 import { errorHandler } from "./middleware/error-handler.js";
 
 export function createApp() {
@@ -57,6 +61,14 @@ export function createApp() {
   app.use("/api/v1/admin/education", adminEducationRouter);
   app.use("/api/v1/admin/certifications", adminCertificationsRouter);
   app.use("/api/v1/admin/media", adminMediaRouter);
+  app.use("/api/v1/public/contact", publicContactRouter);
+  app.use("/api/v1/admin/messages", adminMessagesRouter);
+  app.use("/api/v1/public/settings", publicSettingsRouter);
+  app.use("/api/v1/admin/settings", adminSettingsRouter);
+  app.use("/api/v1/public/services", publicServicesRouter);
+  app.use("/api/v1/public/testimonials", publicTestimonialsRouter);
+  app.use("/api/v1/admin/services", adminServicesRouter);
+  app.use("/api/v1/admin/testimonials", adminTestimonialsRouter);
 
   app.use((_req, res) => {
     res.status(404).json({ success: false, error: { code: "NOT_FOUND", message: "Route not found" } });

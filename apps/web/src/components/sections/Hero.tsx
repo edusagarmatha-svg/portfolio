@@ -1,9 +1,12 @@
 import { sampleProfile } from "../../data/sampleContent";
 import { usePortfolio } from "../../lib/usePortfolio";
+import { useSettings } from "../../lib/useSettings";
 
 export function Hero() {
   const { data } = usePortfolio();
+  const { data: settings } = useSettings();
   const profile = data ?? sampleProfile;
+  const socialLinks = settings.socialLinks?.length ? settings.socialLinks : sampleProfile.social;
   const fullName = profile.fullName ?? sampleProfile.fullName;
   const title = (profile as { professionalTitle?: string | null }).professionalTitle ?? sampleProfile.professionalTitle;
   const intro = (profile as { introduction?: string | null }).introduction ?? sampleProfile.introduction;
@@ -39,7 +42,7 @@ export function Hero() {
               )}
             </div>
             <div className="mt-8 flex gap-5 text-sm text-muted">
-              {sampleProfile.social.map((s) => (
+              {socialLinks.map((s) => (
                 <a key={s.label} href={s.url} className="hover:text-text">
                   {s.label}
                 </a>
