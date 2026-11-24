@@ -1,0 +1,250 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+}
+
+enum ContentStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+enum EmploymentType {
+  FULL_TIME
+  PART_TIME
+  CONTRACT
+  FREELANCE
+  INTERNSHIP
+  OTHER
+}
+
+enum Proficiency {
+  BEGINNER
+  INTERMEDIATE
+  ADVANCED
+  EXPERT
+}
+
+model User {
+  id           String     @id @default(uuid())
+  email        String     @unique
+  passwordHash String
+  role         Role       @default(ADMIN)
+  tokenVersion Int        @default(0)
+  portfolio    Portfolio?
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+}
+
+model Portfolio {
+  id                  String          @id @default(uuid())
+  ownerId             String          @unique
+  owner               User            @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  slug                String?         @unique
+  fullName            String
+  professionalTitle   String?
+  introduction        String?
+  biography           String?
+  profileImageUrl     String?
+  profileImagePublicId String?
+  resumeUrl           String?
+  email               String?
+  phone               String?
+  location            String?
+  createdAt           DateTime        @default(now())
+  updatedAt           DateTime        @updatedAt
+
+  experiences     Experience[]
+  projects        Project[]
+  skills          Skill[]
+  education       Education[]
+  certifications  Certification[]
+  services        Service[]
+  testimonials    Testimonial[]
+  contactMessages ContactMessage[]
+  settings        SiteSetting[]
+}
+
+model Experience {
+  id             String           @id @default(uuid())
+  portfolioId    String
+  portfolio      Portfolio        @relation(fields: [portfolioId], references: [id], onDelete: Cascade)
+  company        String
+  position       String
+  employmentType EmploymentType?
+  description    String?
+  startDate      DateTime
+  endDate        DateTime?
+  isCurrent      Boolean          @default(false)
+  displayOrder   Int              @default(0)
+  status         ContentStatus    @default(DRAFT)
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+
+  @@index([portfolioId, displayOrder])
+  @@index([portfolioId, status])
+}
+
+model Project {
+  id                 String        @id @default(uuid())
+  portfolioId        String
+  portfolio          Portfolio     @relation(fields: [portfolioId], references: [id], onDelete: Cascade)
+  title              String
+  slug               String
+  summary            String?
+  description        String?
+  coverImageUrl      String?
+  coverImagePublicId String?
+  technologies       String[]  @default([])
+  liveUrl         String?
+  sourceUrl          String?
+  featured           Boolean       @default(false)
+  displayOrder       Int           @default(0)
+  status             ContentStatus @default(DRAFT)
+  createdAt          DateTime      @default(now())
+  updatedAt          DateTime      @updatedAt
+
+  images ProjectImage[]
+  skills Skill[]       @relation("ProjectSkills")
+
+  @@unique([portfolioId, slug])
+  @@index([portfolioId, displayOrder])
+  @@index([portfolioId, status])
+  @@index([portfolioId, featured])
+}
+
+model ProjectImage {
+  id           String   @id @default(uuid())
+  projectId    String
+  project      Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  url          String
+  publicId     String?
+  altText      String?
+  displayOrder Int      @default(0)
+  createdAt    DateTime @default(now())
+
+  @@index([projectId, displayOrder])
+}
+
+model Skill {
+  id           String       @id @default(uuid())
+  portfolioId  String
+  portfolio    Portfolio    @relation(fields: [portfolioId], references: [id], onDelete: Cascade)
+  name         String
+  category     String?
+  proficiency  Proficiency?
+  displayOrder Int          @default(0)
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+
+  projects Project[] @relation("ProjectSkills")
+
+  @@unique([portfolioId, name])
+  @@index([portfolioId, displayOrder])
+}
+
+model Education {
+  id            String    @id @default(uuid())
+  portfolioId   String
+  portfolio     Portfolio @relation(fields: [portfolioId], references: [id], onDelete: Cascade)
+  institution   String
+  qualification String
+  fieldOfStudy  String?
+  description   String?
+  startDate     DateTime
+  endDate       DateTime?
+  displayOrder  Int       @default(0)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@index([portfolioId, displayOrder])
+}
+
+model Certification {
+  id                  String        @id @default(uuid())
+  portfolioId         String
+  portfolio           Portfolio     @relation(fields: [portfolioId], references: [id], onDelete: Cascade)
+  title               String
+  issuer              String
+  issueDate           DateTime
+  credentialUrl       String?
+  certificateUrl      String?
+  certificatePublicId String?
+  displayOrder        Int           @default(0)
+  status              ContentStatus @default(DRAFT)
+  createdAt           DateTime      @default(now())
+  updatedAt           DateTime      @updatedAt
+
+  @@index([portfolioId, displayOrder])
+  @@index([portfolioId, status])
+}
+
+model Service {
+  id            String        @id @default(uuid())
+  portfolioId   String
+  portfolio     Portfolio     @relation(fields: [portfolioId], references: [id], onDelete: Cascade)
+  title         String
+  description   String?
+  imageUrl      String?
+  imagePublicId String?
+  displayOrder  Int           @default(0)
+  status        ContentStatus @default(DRAFT)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  @@index([portfolioId, displayOrder])
+  @@index([portfolioId, status])
+}
+
+model Testimonial {
+  id            String        @id @default(uuid())
+  portfolioId   String
+  portfolio     Portfolio     @relation(fields: [portfolioId], references: [id], onDelete: Cascade)
+  clientName    String
+  clientRole    String?
+  organization  String?
+  feedback      String
+  photoUrl      String?
+  photoPublicId String?
+  displayOrder  Int           @default(0)
+  status        ContentStatus @default(DRAFT)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  @@index([portfolioId, displayOrder])
+  @@index([portfolioId, status])
+}
+
+model ContactMessage {
+  id          String    @id @default(uuid())
+  portfolioId String
+  portfolio   Portfolio @relation(fields: [portfolioId], references: [id], onDelete: Cascade)
+  senderName  String
+  senderEmail String
+  subject     String?
+  message     String
+  readAt      DateTime?
+  createdAt   DateTime  @default(now())
+
+  @@index([portfolioId, createdAt])
+  @@index([portfolioId, readAt])
+}
+
+model SiteSetting {
+  id          String    @id @default(uuid())
+  portfolioId String
+  portfolio   Portfolio @relation(fields: [portfolioId], references: [id], onDelete: Cascade)
+  key         String
+  value       Json
+  updatedAt   DateTime  @updatedAt
+
+  @@unique([portfolioId, key])
+}
