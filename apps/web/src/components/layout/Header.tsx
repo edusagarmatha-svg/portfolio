@@ -95,7 +95,7 @@ export function Header() {
               </a>
             ))}
             <span
-              className="absolute bottom-1 h-0.5 bg-gold transition-all duration-300 ease-premium"
+              className="absolute bottom-[-6px] h-0.5 bg-gold transition-all duration-300 ease-premium"
               style={{
                 left: indicator.left,
                 width: indicator.width,
