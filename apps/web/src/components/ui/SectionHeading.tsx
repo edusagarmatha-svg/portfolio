@@ -39,27 +39,31 @@ export function SectionHeading({
         .join(" ")}
     >
       {eyebrow && (
-        <p className="text-eyebrow font-medium uppercase text-gold">{eyebrow}</p>
+        <p className="text-eyebrow font-medium uppercase text-gold reveal" style={{ transitionDelay: "0ms" }}>
+          {eyebrow}
+        </p>
       )}
       <h2
         className={[
-          "mt-3 font-display font-semibold tracking-tight",
+          "mt-3 font-display font-semibold tracking-tight reveal",
           tone === "dark" ? "text-cream" : "text-charcoal",
           titleStyles[size],
         ]
           .filter(Boolean)
           .join(" ")}
+        style={{ transitionDelay: "120ms" }}
       >
         {title}
       </h2>
       {description && (
         <p
           className={[
-            "mt-4 text-body-lg leading-relaxed",
+            "mt-4 text-body-lg leading-relaxed reveal",
             tone === "dark" ? "text-cream/75" : "text-mutedgreen",
           ]
             .filter(Boolean)
             .join(" ")}
+          style={{ transitionDelay: "240ms" }}
         >
           {description}
         </p>

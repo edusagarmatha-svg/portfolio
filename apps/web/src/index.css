@@ -107,6 +107,103 @@ body {
   animation: fadeUp var(--duration-slow) var(--ease-premium) 0.15s both;
 }
 
+/* Navbar entrance */
+@keyframes fadeDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-down {
+  animation: fadeDown var(--duration-slow) var(--ease-premium) both;
+}
+
+/* Hero scale-in */
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-scale-in {
+  animation: scaleIn 800ms var(--ease-premium) both;
+}
+
+/* Slow spin for decorative rings */
+@keyframes spinSlow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spinSlow 36s linear infinite;
+}
+
+/* Unified scroll reveals */
+.reveal,
+.reveal-up,
+.reveal-left,
+.reveal-right,
+.reveal-fade,
+.about-reveal,
+.about-reveal-left,
+.about-reveal-right {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .reveal,
+  .reveal-up,
+  .reveal-left,
+  .reveal-right,
+  .reveal-fade,
+  .about-reveal,
+  .about-reveal-left,
+  .about-reveal-right {
+    opacity: 0;
+    transition: opacity 700ms var(--ease-premium), transform 700ms var(--ease-premium);
+  }
+  .reveal,
+  .reveal-up,
+  .about-reveal {
+    transform: translateY(20px);
+  }
+  .reveal-left,
+  .about-reveal-left {
+    transform: translateX(-24px);
+  }
+  .reveal-right,
+  .about-reveal-right {
+    transform: translateX(24px);
+  }
+  .reveal-fade {
+    transform: none;
+  }
+  .is-visible .reveal,
+  .is-visible .reveal-up,
+  .is-visible .reveal-left,
+  .is-visible .reveal-right,
+  .is-visible .reveal-fade,
+  .about-visible .about-reveal,
+  .about-visible .about-reveal-left,
+  .about-visible .about-reveal-right {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 /* Subtle gold divider */
 .gold-divider {
   height: 1px;
