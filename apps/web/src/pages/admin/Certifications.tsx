@@ -94,7 +94,7 @@ export function CertificationsAdmin() {
             </div>
             <div>
               <label className="text-sm font-medium">Status</label>
-              <select className="mt-1.5 w-full rounded-md border border-border bg-bg px-3 py-2 text-sm" value={form.status} onChange={(e) => set("status", e.target.value)}>
+              <select className="mt-1.5" value={form.status} onChange={(e) => set("status", e.target.value)}>
                 <option value="DRAFT">Draft</option>
                 <option value="PUBLISHED">Published</option>
                 <option value="ARCHIVED">Archived</option>

@@ -17,11 +17,8 @@ export function Textarea({
       <textarea
         id={id}
         className={[
-          "w-full rounded-md border border-sage/50 bg-white/90 text-forest transition-all duration-normal ease-[var(--ease-premium)] placeholder:text-mutedgreen/40 focus:outline-none focus:border-forest focus:ring-2 focus:ring-forest/20 disabled:cursor-not-allowed disabled:opacity-50",
-          "resize:vertical",
-          error
-            ? "border-red-500 focus:border-red-500 focus:ring-red-200"
-            : "",
+          "min-h-[120px] w-full resize-y rounded-md border border-sage/40 bg-white px-3.5 py-2.5 text-sm leading-relaxed text-charcoal transition-colors duration-200 placeholder:text-mutedgreen/50 focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/20 disabled:cursor-not-allowed disabled:opacity-50",
+          error ? "border-red-500 focus:border-red-500 focus:ring-red-200" : "",
           className,
         ]
           .filter(Boolean)

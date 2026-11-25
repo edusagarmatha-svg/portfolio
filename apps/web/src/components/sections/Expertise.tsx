@@ -8,8 +8,16 @@ export function Expertise() {
   const { data } = useSkills();
   const { ref, visible } = useReveal();
 
+  const groups = Object.entries(
+    data.reduce<Record<string, string[]>>((acc, s) => {
+      const cat = s.category?.trim() || "Other";
+      (acc[cat] ??= []).push(s.name);
+      return acc;
+    }, {})
+  );
+
   return (
-    <Section id="expertise" className="bg-cream !pb-8">
+    <Section id="expertise" className="bg-cream">
       <Container>
         <div ref={ref as RefObject<HTMLDivElement | null>} className={visible ? "is-visible" : ""}>
           <h2
@@ -19,38 +27,56 @@ export function Expertise() {
             Expertise
           </h2>
           <p
-            className="mt-3 font-display text-2xl font-semibold tracking-tight reveal"
+            className="mt-3 font-display text-2xl font-semibold tracking-tight text-forest reveal"
             style={{ transitionDelay: "120ms" }}
           >
             Capabilities
           </p>
-          {data.length > 0 ? (
-            <div className="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-              {Object.entries(
-                data.reduce<Record<string, any[]>>((acc: any, s: any) => {
-                  const cat = s.category ?? "Other";
-                  (acc[cat] ??= []).push(s);
-                  return acc;
-                }, {})
-              ).map(([cat, items], index) => (
-                <div
+
+          {groups.length > 0 ? (
+            <div className="mt-12 grid grid-cols-1 gap-10 md:grid-cols-2 md:gap-12 lg:gap-16">
+              {groups.map(([cat, items], index) => (
+                <article
                   key={cat}
-                  className="reveal transition-all duration-200 hover:-translate-y-0.5"
+                  className="reveal group relative flex h-full flex-col border-t border-border/70 pt-6 transition-all duration-300 hover:-translate-y-0.5"
                   style={{ transitionDelay: `${index * 120 + 200}ms` }}
                 >
-                  <h3 className="text-base font-semibold text-charcoal">{cat}</h3>
-                  <ul className="mt-3 space-y-2">
-                    {items.map((s: any) => (
-                      <li key={s.id} className="flex items-center text-base font-display text-charcoal">
-                        <span className="font-display">{s.name}</span>
+                  <span
+                    className="reveal-fade absolute right-0 top-0 font-display text-6xl leading-none text-gold/15 transition-opacity duration-300 group-hover:text-gold/25"
+                    style={{ transitionDelay: `${index * 120 + 260}ms` }}
+                    aria-hidden="true"
+                  >
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+
+                  <h3 className="font-display text-2xl font-semibold tracking-tight text-forest">
+                    {cat}
+                  </h3>
+
+                  <div
+                    className="gold-rule mt-4 h-px bg-gold"
+                    style={{ transitionDelay: `${index * 120 + 320}ms` }}
+                    aria-hidden="true"
+                  />
+
+                  <ul className="mt-6 flex flex-wrap gap-2">
+                    {items.map((name) => (
+                      <li
+                        key={name}
+                        className="border border-border/70 px-3 py-1.5 text-sm font-medium text-charcoal transition-colors duration-200 hover:border-gold hover:text-forest"
+                      >
+                        {name}
                       </li>
                     ))}
                   </ul>
-                </div>
+                </article>
               ))}
             </div>
           ) : (
-            <p className="mt-10 text-muted reveal" style={{ transitionDelay: "200ms" }}>
+            <p
+              className="mt-10 text-muted reveal"
+              style={{ transitionDelay: "200ms" }}
+            >
               No expertise data available
             </p>
           )}

@@ -9,7 +9,7 @@ export function Education() {
   const { ref, visible } = useReveal();
 
   return (
-    <Section id="education" className="bg-cream !pt-8">
+    <Section id="education" className="bg-cream">
       <Container>
         <div ref={ref as RefObject<HTMLDivElement | null>} className={visible ? "is-visible" : ""}>
           <h2

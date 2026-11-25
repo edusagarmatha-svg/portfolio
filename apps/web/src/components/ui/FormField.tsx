@@ -20,7 +20,7 @@ export function FormField({
   className = "",
 }: FormFieldProps) {
   return (
-    <div className={[ "space-y-1.5", className ].filter(Boolean).join(" ")}>
+    <div className={[ "space-y-2", className ].filter(Boolean).join(" ")}>
       {label && (
         <label
           htmlFor={htmlFor}

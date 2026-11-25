@@ -98,7 +98,7 @@ export function SettingsAdmin() {
             </div>
             <div>
               <label className="text-sm font-medium">Meta description</label>
-              <textarea className="mt-1.5 w-full rounded-md border border-border bg-bg px-3 py-2 text-sm" rows={3} value={seo.description ?? ""} onChange={(e) => setSeo({ ...seo, description: e.target.value })} />
+              <textarea className="mt-1.5" rows={3} value={seo.description ?? ""} onChange={(e) => setSeo({ ...seo, description: e.target.value })} />
             </div>
           </div>
         </Card>

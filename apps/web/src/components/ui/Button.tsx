@@ -8,11 +8,14 @@ export function Button({
   children,
   ...props
 }: ButtonHTMLAttributes<HTMLButtonElement> & { variant?: Variant; children: ReactNode }) {
-  const base = "inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition disabled:opacity-50";
+  const base =
+    "inline-flex items-center justify-center rounded-md px-4 py-2.5 text-sm font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-gold/30 disabled:cursor-not-allowed disabled:opacity-50";
   const styles: Record<Variant, string> = {
-    primary: "bg-accent text-white hover:opacity-90",
-    secondary: "border border-border bg-surface text-text hover:bg-bg",
-    ghost: "text-muted hover:text-text",
+    primary:
+      "bg-forest text-cream shadow-sm hover:bg-forest/90 hover:shadow-md active:translate-y-px",
+    secondary:
+      "border border-forest/30 bg-white text-forest hover:border-gold hover:bg-forest/5",
+    ghost: "text-mutedgreen hover:text-forest",
   };
   return (
     <button className={`${base} ${styles[variant]} ${className}`} {...props}>

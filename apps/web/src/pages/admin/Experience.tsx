@@ -139,7 +139,7 @@ export function ExperienceAdmin() {
             <div>
               <label className="text-sm font-medium">Employment type</label>
               <select
-                className="mt-1.5 w-full rounded-md border border-border bg-bg px-3 py-2 text-sm"
+                className="mt-1.5"
                 value={form.employmentType}
                 onChange={(e) => set("employmentType", e.target.value)}
               >
@@ -155,7 +155,7 @@ export function ExperienceAdmin() {
             <div>
               <label className="text-sm font-medium">Status</label>
               <select
-                className="mt-1.5 w-full rounded-md border border-border bg-bg px-3 py-2 text-sm"
+                className="mt-1.5"
                 value={form.status}
                 onChange={(e) => set("status", e.target.value)}
               >
@@ -181,7 +181,7 @@ export function ExperienceAdmin() {
             <div className="sm:col-span-2">
               <label className="text-sm font-medium">Description</label>
               <textarea
-                className="mt-1.5 w-full rounded-md border border-border bg-bg px-3 py-2 text-sm"
+                className="mt-1.5"
                 rows={4}
                 value={form.description}
                 onChange={(e) => set("description", e.target.value)}

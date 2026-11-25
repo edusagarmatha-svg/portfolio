@@ -70,7 +70,7 @@ export function SkillsAdmin() {
             </div>
             <div>
               <label className="text-sm font-medium">Proficiency</label>
-              <select className="mt-1.5 w-full rounded-md border border-border bg-bg px-3 py-2 text-sm" value={form.proficiency} onChange={(e) => set("proficiency", e.target.value)}>
+              <select className="mt-1.5" value={form.proficiency} onChange={(e) => set("proficiency", e.target.value)}>
                 <option value="">—</option>
                 <option value="BEGINNER">Beginner</option>
                 <option value="INTERMEDIATE">Intermediate</option>

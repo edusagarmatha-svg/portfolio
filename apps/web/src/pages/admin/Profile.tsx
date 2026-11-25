@@ -99,7 +99,7 @@ export function Profile() {
             <div className="sm:col-span-2">
               <label className="text-sm font-medium">Introduction</label>
               <textarea
-                className="mt-1.5 w-full rounded-md border border-border bg-bg px-3 py-2 text-sm"
+                className="mt-1.5"
                 rows={3}
                 value={form.introduction}
                 onChange={(e) => set("introduction", e.target.value)}
@@ -108,7 +108,7 @@ export function Profile() {
             <div className="sm:col-span-2">
               <label className="text-sm font-medium">Biography (About)</label>
               <textarea
-                className="mt-1.5 w-full rounded-md border border-border bg-bg px-3 py-2 text-sm"
+                className="mt-1.5"
                 rows={6}
                 value={form.biography}
                 onChange={(e) => set("biography", e.target.value)}

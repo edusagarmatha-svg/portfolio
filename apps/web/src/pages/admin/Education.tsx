@@ -96,7 +96,7 @@ export function EducationAdmin() {
             </div>
             <div className="sm:col-span-2">
               <label className="text-sm font-medium">Description</label>
-              <textarea className="mt-1.5 w-full rounded-md border border-border bg-bg px-3 py-2 text-sm" rows={3} value={form.description} onChange={(e) => set("description", e.target.value)} />
+              <textarea className="mt-1.5" rows={3} value={form.description} onChange={(e) => set("description", e.target.value)} />
             </div>
           </div>
           <div className="flex gap-2">

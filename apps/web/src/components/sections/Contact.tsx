@@ -4,6 +4,9 @@ import { Container } from "../layout/Container";
 import { Mail, Phone, MapPin } from "lucide-react";
 import { sampleProfile } from "../../data/sampleContent";
 import { usePortfolio } from "../../lib/usePortfolio";
+import { Input } from "../ui/Input";
+import { Textarea } from "../ui/Textarea";
+import { Button } from "../ui/Button";
 import { api } from "../../lib/api";
 
 export function Contact() {
@@ -61,26 +64,26 @@ export function Contact() {
               <div className="grid gap-4 sm:grid-cols-2">
                 <div>
                   <label className="text-sm font-medium text-text" htmlFor="senderName">Name</label>
-                  <input id="senderName" required value={form.senderName} onChange={(e) => setForm({ ...form, senderName: e.target.value })} className="mt-1.5 w-full rounded-md border border-border bg-bg px-3 py-2 text-sm" />
+                  <Input id="senderName" required value={form.senderName} onChange={(e) => setForm({ ...form, senderName: e.target.value })} className="mt-1.5" />
                 </div>
                 <div>
                   <label className="text-sm font-medium text-text" htmlFor="senderEmail">Email</label>
-                  <input id="senderEmail" type="email" required value={form.senderEmail} onChange={(e) => setForm({ ...form, senderEmail: e.target.value })} className="mt-1.5 w-full rounded-md border border-border bg-bg px-3 py-2 text-sm" />
+                  <Input id="senderEmail" type="email" required value={form.senderEmail} onChange={(e) => setForm({ ...form, senderEmail: e.target.value })} className="mt-1.5" />
                 </div>
               </div>
               <div>
                 <label className="text-sm font-medium text-text" htmlFor="subject">Subject</label>
-                <input id="subject" value={form.subject} onChange={(e) => setForm({ ...form, subject: e.target.value })} className="mt-1.5 w-full rounded-md border border-border bg-bg px-3 py-2 text-sm" />
+                <Input id="subject" value={form.subject} onChange={(e) => setForm({ ...form, subject: e.target.value })} className="mt-1.5" />
               </div>
               <div>
                 <label className="text-sm font-medium text-text" htmlFor="message">Message</label>
-                <textarea id="message" required rows={5} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} className="mt-1.5 w-full rounded-md border border-border bg-bg px-3 py-2 text-sm" />
+                <Textarea id="message" required rows={5} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} className="mt-1.5" />
               </div>
               {error && <p className="text-sm text-red-600">{error}</p>}
               {status === "sent" && <p className="text-sm text-accent">Message sent. Thank you!</p>}
-              <button type="submit" disabled={status === "sending"} className="inline-flex items-center rounded-md bg-forest px-5 py-2.5 text-sm font-medium text-cream transition hover:opacity-90 disabled:opacity-50">
+              <Button type="submit" disabled={status === "sending"}>
                 {status === "sending" ? "Sending…" : "Send message"}
-              </button>
+              </Button>
             </form>
           </div>
         </div>

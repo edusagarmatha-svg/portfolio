@@ -8,7 +8,6 @@ export function Footer() {
           <p className="text-sm text-cream">
             © {new Date().getFullYear()} Subodh Rayamajhee. All rights reserved.
           </p>
-          <p className="text-xs text-sage">Built with care.</p>
         </div>
       </Container>
     </footer>

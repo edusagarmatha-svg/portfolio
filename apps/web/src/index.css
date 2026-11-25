@@ -150,6 +150,73 @@ body {
   animation: spinSlow 36s linear infinite;
 }
 
+/* Gold accent rule expansion */
+.gold-rule {
+  width: 0;
+  transition: width 700ms var(--ease-premium);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .is-visible .gold-rule {
+    width: 3rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gold-rule {
+    width: 3rem;
+  }
+}
+
+/* Form controls fallback styling for raw elements */
+select,
+textarea.raw-control {
+  /* placeholder */
+}
+
+select {
+  height: 2.75rem;
+  width: 100%;
+  border-radius: 0.375rem;
+  border: 1px solid rgba(167, 181, 165, 0.4);
+  background-color: #ffffff;
+  padding: 0 0.875rem;
+  font-size: 0.875rem;
+  color: #252B29;
+  transition: border-color 200ms, box-shadow 200ms;
+}
+
+select:focus {
+  border-color: #B89A5A;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(184, 154, 90, 0.2);
+}
+
+textarea {
+  min-height: 7.5rem;
+  width: 100%;
+  border-radius: 0.375rem;
+  border: 1px solid rgba(167, 181, 165, 0.4);
+  background-color: #ffffff;
+  padding: 0.625rem 0.875rem;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: #252B29;
+  resize: vertical;
+  transition: border-color 200ms, box-shadow 200ms;
+}
+
+textarea:focus {
+  border-color: #B89A5A;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(184, 154, 90, 0.2);
+}
+
+textarea::placeholder,
+select::placeholder {
+  color: rgba(49, 92, 77, 0.5);
+}
+
 /* Unified scroll reveals */
 .reveal,
 .reveal-up,
