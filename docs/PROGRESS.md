@@ -443,3 +443,37 @@ Against a real Postgres, with a real PNG, end to end:
   `/admin/projects`, serves hashed assets, and still returns JSON for
   `/api/v1` and a 404 for `/api/v1/nope`
 - `tsc --noEmit` clean for api and web; `vitest` 5/5 passing
+
+## Deployed to Railway (2026-11-26)
+
+Live at `https://portfolio-cms-production-46706fb9.up.railway.app`. Railway project
+`portfolio-cms`, one app service plus a Postgres service, with a 45 GB volume mounted at
+`/data` and `UPLOAD_DIR=/data/uploads`.
+
+**The service builds from GitHub, not from a local upload.** `railway up` failed twice,
+reproducibly, with `header key "exclude-patterns" contains value with non-printable ASCII
+characters` while loading the build context — both `.dockerignore` and every `.gitignore`
+in the tree are pure printable ASCII, and no filename in the repo carries a non-printable
+byte, so this is in Railway's uploader rather than in this repository. The service is
+connected to `edusagarmatha-svg/portfolio` on `main` instead, which also means a push now
+deploys itself.
+
+**Seeding is deliberately not part of boot.** `prisma/seed.ts` has
+`update: { passwordHash }`, so running it on every start would silently reset the admin
+password whenever it is changed. The admin user and the `Portfolio` row were created once
+by a create-only bootstrap run inside the container. `ADMIN_EMAIL`, `ADMIN_PASSWORD` and
+`ADMIN_NAME` live in the Railway service variables; the password is only there.
+
+Verified against the live service: health, the SPA at `/` and on a client route, JSON still
+served at `/api/v1` with a 404 on an unknown API path, a 404 on a missing upload, login,
+an upload that lands on the volume and is served over HTTPS with `immutable,
+max-age=31536000` and `Cross-Origin-Resource-Policy: cross-origin`, deletion, and a
+traversing publicId refused with `INVALID_FILE_ID`. The uploaded file was then re-fetched
+**after a full redeploy** and came back byte-identical.
+
+**Outstanding.** Railway has deprecated `railway.json`; it stops working on 2026-12-01.
+`.railway/railway.ts` has been generated with variables left unmanaged, so secrets stay in
+the dashboard, but the cutover has not been run and the file is not committed. Also, the
+Postgres password was printed into a session transcript while listing variables; the
+database has no public domain and no TCP proxy, so it is reachable only on
+`postgres.railway.internal`, but rotating it is still the clean course.
