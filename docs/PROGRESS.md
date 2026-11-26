@@ -477,3 +477,27 @@ the dashboard, but the cutover has not been run and the file is not committed. A
 Postgres password was printed into a session transcript while listing variables; the
 database has no public domain and no TCP proxy, so it is reachable only on
 `postgres.railway.internal`, but rotating it is still the clean course.
+
+### The live data was restored from Sir's dump (2026-11-26)
+
+`portfolio_cms_2026-11-26.sql`, a 45 KB plain pg_dump from PostgreSQL 16.16, replaced the
+bootstrap rows. Procedure, because the dump carries no `DROP` statements and would
+otherwise collide with the schema `migrate deploy` had already created:
+
+1. base64 the dump through `railway ssh --service Postgres` into the database container,
+   which has a psql client — so the database never needed a public TCP proxy. Verify the
+   md5 matches on both sides.
+2. `pg_dump` the current state to a safety copy and pull it back out the same way.
+3. `DROP SCHEMA public CASCADE; CREATE SCHEMA public;` then `psql -v ON_ERROR_STOP=1 -f`.
+
+The dump's `_prisma_migrations` checksums were verified against the three migration folders
+in the repo before trusting it; they match, so the next boot's `migrate deploy` is a no-op.
+Restored and confirmed live: 1 user, 1 portfolio, 5 experience, 6 skills, 1 education,
+3 site settings, all visible through the public API.
+
+**The admin identity is now the one in the dump,** with the password hash from Sir's own
+database. The `ADMIN_EMAIL` / `ADMIN_PASSWORD` / `ADMIN_NAME` service variables are
+therefore stale — they describe the bootstrap user that the restore removed. They are read
+only by the seed and the one-shot bootstrap, neither of which runs on boot, so they are
+inert rather than harmful, but they should be removed or corrected to avoid misleading a
+future session.
