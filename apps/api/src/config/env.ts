@@ -9,9 +9,10 @@ const envSchema = z.object({
   JWT_EXPIRES_IN: z.string().default("7d"),
   COOKIE_NAME: z.string().default("pcms_token"),
   CORS_ORIGIN: z.string().default("http://localhost:5173"),
-  CLOUDINARY_CLOUD_NAME: z.string().optional(),
-  CLOUDINARY_API_KEY: z.string().optional(),
-  CLOUDINARY_API_SECRET: z.string().optional(),
+  /** Where uploaded media is written. On Railway, a mounted volume. */
+  UPLOAD_DIR: z.string().default("./uploads"),
+  /** Built SPA to serve. Relative paths resolve against the API's working directory. */
+  WEB_DIST_DIR: z.string().default("../web/dist"),
 });
 
 export const env = envSchema.parse(process.env);

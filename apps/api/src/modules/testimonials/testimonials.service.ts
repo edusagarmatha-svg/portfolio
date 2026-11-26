@@ -21,6 +21,7 @@ export async function createTestimonial(portfolioId: string, data: Record<string
       organization: (data.organization as string | null) ?? null,
       feedback: data.feedback as string,
       photoUrl: (data.photoUrl as string | null) ?? null,
+      photoPublicId: (data.photoPublicId as string | null) ?? null,
       displayOrder: (data.displayOrder as number) ?? nextOrder,
       status: (data.status as ContentStatus) ?? "DRAFT",
     },
@@ -35,6 +36,7 @@ export async function updateTestimonial(id: string, portfolioId: string, data: R
   if (data.organization !== undefined) update.organization = data.organization;
   if (data.feedback !== undefined) update.feedback = data.feedback;
   if (data.photoUrl !== undefined) update.photoUrl = data.photoUrl;
+  if (data.photoPublicId !== undefined) update.photoPublicId = data.photoPublicId;
   if (data.displayOrder !== undefined) update.displayOrder = data.displayOrder;
   if (data.status !== undefined) update.status = data.status;
   return prisma.testimonial.update({ where: { id }, data: update as any });

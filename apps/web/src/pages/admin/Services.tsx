@@ -6,8 +6,8 @@ import { Input } from "../../components/ui/Input";
 import { Card } from "../../components/ui/Card";
 import { ImageUpload } from "../../components/ui/ImageUpload";
 
-type Item = { id: string; title: string; description: string | null; imageUrl: string | null; status: string };
-const empty = { title: "", description: "", imageUrl: "", status: "DRAFT" };
+type Item = { id: string; title: string; description: string | null; imageUrl: string | null; imagePublicId: string | null; status: string };
+const empty = { title: "", description: "", imageUrl: "", imagePublicId: "", status: "DRAFT" };
 
 export function ServicesAdmin() {
   const { show } = useToast();
@@ -19,11 +19,11 @@ export function ServicesAdmin() {
   async function load() { setLoading(true); try { setItems(await api<Item[]>("/api/v1/admin/services")); } catch (e) { show(e instanceof Error ? e.message : "Load failed", "error"); } finally { setLoading(false); } }
   useEffect(() => { load(); }, []);
   function set<K extends keyof typeof empty>(key: K, value: string) { setForm((f) => ({ ...f, [key]: value })); }
-  function startEdit(item: Item) { setEditingId(item.id); setForm({ title: item.title, description: item.description ?? "", imageUrl: item.imageUrl ?? "", status: item.status }); }
+  function startEdit(item: Item) { setEditingId(item.id); setForm({ title: item.title, description: item.description ?? "", imageUrl: item.imageUrl ?? "", imagePublicId: item.imagePublicId ?? "", status: item.status }); }
   function resetForm() { setEditingId(null); setForm(empty); }
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    const payload = { title: form.title, description: form.description || null, imageUrl: form.imageUrl || null, status: form.status };
+    const payload = { title: form.title, description: form.description || null, imageUrl: form.imageUrl || null, imagePublicId: form.imagePublicId || null, status: form.status };
     try {
       if (editingId) await api(`/api/v1/admin/services/${editingId}`, { method: "PUT", body: JSON.stringify(payload) });
       else await api("/api/v1/admin/services", { method: "POST", body: JSON.stringify(payload) });
@@ -56,7 +56,7 @@ export function ServicesAdmin() {
                 <option value="DRAFT">Draft</option><option value="PUBLISHED">Published</option><option value="ARCHIVED">Archived</option>
               </select>
             </div>
-            <div className="sm:col-span-2"><ImageUpload label="Image" value={form.imageUrl} onChange={(url) => set("imageUrl", url)} /></div>
+            <div className="sm:col-span-2"><ImageUpload label="Image" value={form.imageUrl} onChange={(url, publicId) => setForm((f) => ({ ...f, imageUrl: url, imagePublicId: publicId ?? "" }))} /></div>
             <div className="sm:col-span-2"><label className="text-sm font-medium">Description</label><textarea className="mt-1.5" rows={4} value={form.description} onChange={(e) => set("description", e.target.value)} /></div>
           </div>
           <div className="flex gap-2">

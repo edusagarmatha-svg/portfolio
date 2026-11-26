@@ -1,3 +1,4 @@
+import { mediaUrl } from "../../lib/api";
 import { usePortfolio } from "../../lib/usePortfolio";
 
 export function Hero() {
@@ -72,7 +73,7 @@ export function Hero() {
           <img
             className="relative z-10 aspect-square w-[240px] h-[240px] sm:w-[300px] sm:h-[300px] lg:w-[380px] lg:h-[380px] rounded-full object-cover object-center border-4 border-gold animate-scale-in"
             style={{ animationDelay: "300ms" }}
-            src={profileImageUrl ?? "/placeholder-portrait.jpg"}
+            src={mediaUrl(profileImageUrl) ?? "/placeholder-portrait.jpg"}
             alt={`${fullName ?? ""} profile portrait`}
           />
         </div>

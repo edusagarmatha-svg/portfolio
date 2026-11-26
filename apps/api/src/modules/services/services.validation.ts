@@ -5,6 +5,7 @@ export const serviceCreateSchema = z.object({
   title: z.string().trim().min(1),
   description: z.string().trim().optional().nullable().transform((v) => (v === "" ? null : v)),
   imageUrl: z.string().trim().optional().nullable().transform((v) => (v === "" ? null : v)),
+  imagePublicId: z.string().trim().optional().nullable().transform((v) => (v === "" ? null : v)),
   displayOrder: z.number().int().optional(),
   status: z.enum(statuses).optional().default("DRAFT"),
 });

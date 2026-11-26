@@ -19,6 +19,7 @@ export async function createService(portfolioId: string, data: Record<string, un
       title: data.title as string,
       description: (data.description as string | null) ?? null,
       imageUrl: (data.imageUrl as string | null) ?? null,
+      imagePublicId: (data.imagePublicId as string | null) ?? null,
       displayOrder: (data.displayOrder as number) ?? nextOrder,
       status: (data.status as ContentStatus) ?? "DRAFT",
     },
@@ -31,6 +32,7 @@ export async function updateService(id: string, portfolioId: string, data: Recor
   if (data.title !== undefined) update.title = data.title;
   if (data.description !== undefined) update.description = data.description;
   if (data.imageUrl !== undefined) update.imageUrl = data.imageUrl;
+  if (data.imagePublicId !== undefined) update.imagePublicId = data.imagePublicId;
   if (data.displayOrder !== undefined) update.displayOrder = data.displayOrder;
   if (data.status !== undefined) update.status = data.status;
   return prisma.service.update({ where: { id }, data: update as any });

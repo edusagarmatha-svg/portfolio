@@ -6,8 +6,8 @@ import { Input } from "../../components/ui/Input";
 import { Card } from "../../components/ui/Card";
 import { ImageUpload } from "../../components/ui/ImageUpload";
 
-type Item = { id: string; clientName: string; clientRole: string | null; organization: string | null; feedback: string; photoUrl: string | null; status: string };
-const empty = { clientName: "", clientRole: "", organization: "", feedback: "", photoUrl: "", status: "DRAFT" };
+type Item = { id: string; clientName: string; clientRole: string | null; organization: string | null; feedback: string; photoUrl: string | null; photoPublicId: string | null; status: string };
+const empty = { clientName: "", clientRole: "", organization: "", feedback: "", photoUrl: "", photoPublicId: "", status: "DRAFT" };
 
 export function TestimonialsAdmin() {
   const { show } = useToast();
@@ -19,11 +19,11 @@ export function TestimonialsAdmin() {
   async function load() { setLoading(true); try { setItems(await api<Item[]>("/api/v1/admin/testimonials")); } catch (e) { show(e instanceof Error ? e.message : "Load failed", "error"); } finally { setLoading(false); } }
   useEffect(() => { load(); }, []);
   function set<K extends keyof typeof empty>(key: K, value: string) { setForm((f) => ({ ...f, [key]: value })); }
-  function startEdit(item: Item) { setEditingId(item.id); setForm({ clientName: item.clientName, clientRole: item.clientRole ?? "", organization: item.organization ?? "", feedback: item.feedback, photoUrl: item.photoUrl ?? "", status: item.status }); }
+  function startEdit(item: Item) { setEditingId(item.id); setForm({ clientName: item.clientName, clientRole: item.clientRole ?? "", organization: item.organization ?? "", feedback: item.feedback, photoUrl: item.photoUrl ?? "", photoPublicId: item.photoPublicId ?? "", status: item.status }); }
   function resetForm() { setEditingId(null); setForm(empty); }
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    const payload = { clientName: form.clientName, clientRole: form.clientRole || null, organization: form.organization || null, feedback: form.feedback, photoUrl: form.photoUrl || null, status: form.status };
+    const payload = { clientName: form.clientName, clientRole: form.clientRole || null, organization: form.organization || null, feedback: form.feedback, photoUrl: form.photoUrl || null, photoPublicId: form.photoPublicId || null, status: form.status };
     try {
       if (editingId) await api(`/api/v1/admin/testimonials/${editingId}`, { method: "PUT", body: JSON.stringify(payload) });
       else await api("/api/v1/admin/testimonials", { method: "POST", body: JSON.stringify(payload) });
@@ -58,7 +58,7 @@ export function TestimonialsAdmin() {
                 <option value="DRAFT">Draft</option><option value="PUBLISHED">Published</option><option value="ARCHIVED">Archived</option>
               </select>
             </div>
-            <div className="sm:col-span-2"><ImageUpload label="Photo" value={form.photoUrl} onChange={(url) => set("photoUrl", url)} /></div>
+            <div className="sm:col-span-2"><ImageUpload label="Photo" value={form.photoUrl} onChange={(url, publicId) => setForm((f) => ({ ...f, photoUrl: url, photoPublicId: publicId ?? "" }))} /></div>
             <div className="sm:col-span-2"><label className="text-sm font-medium">Feedback</label><textarea className="mt-1.5" rows={4} value={form.feedback} onChange={(e) => set("feedback", e.target.value)} required /></div>
           </div>
           <div className="flex gap-2">

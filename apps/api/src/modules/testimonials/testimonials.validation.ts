@@ -7,6 +7,7 @@ export const testimonialCreateSchema = z.object({
   organization: z.string().trim().optional().nullable().transform((v) => (v === "" ? null : v)),
   feedback: z.string().trim().min(1),
   photoUrl: z.string().trim().optional().nullable().transform((v) => (v === "" ? null : v)),
+  photoPublicId: z.string().trim().optional().nullable().transform((v) => (v === "" ? null : v)),
   displayOrder: z.number().int().optional(),
   status: z.enum(statuses).optional().default("DRAFT"),
 });

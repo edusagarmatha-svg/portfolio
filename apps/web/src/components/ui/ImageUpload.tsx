@@ -1,4 +1,5 @@
 import { useRef, useState } from "react";
+import { mediaUrl } from "../../lib/api";
 import { Button } from "./Button";
 
 type Result = { url: string; publicId: string };
@@ -45,7 +46,7 @@ export function ImageUpload({
       <label className="text-sm font-medium">{label}</label>
       <div className="mt-1.5 flex items-center gap-3">
         {value ? (
-          <img src={value} alt="" className="h-16 w-16 rounded-md border border-border object-cover" />
+          <img src={mediaUrl(value)} alt="" className="h-16 w-16 rounded-md border border-border object-cover" />
         ) : (
           <div className="flex h-16 w-16 items-center justify-center rounded-md border border-border bg-bg text-xs text-muted">
             No image
@@ -56,7 +57,7 @@ export function ImageUpload({
             {uploading ? "Uploading…" : "Upload"}
           </Button>
           {value && (
-            <Button type="button" variant="ghost" onClick={() => onChange("")}>
+            <Button type="button" variant="ghost" onClick={() => onChange("", "")}>
               Remove
             </Button>
           )}

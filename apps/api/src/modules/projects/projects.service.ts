@@ -43,6 +43,7 @@ export async function createProject(portfolioId: string, data: Record<string, un
       summary: (data.summary as string | null) ?? null,
       description: (data.description as string | null) ?? null,
       coverImageUrl: (data.coverImageUrl as string | null) ?? null,
+      coverImagePublicId: (data.coverImagePublicId as string | null) ?? null,
       technologies: (data.technologies as string[]) ?? [],
       liveUrl: (data.liveUrl as string | null) ?? null,
       sourceUrl: (data.sourceUrl as string | null) ?? null,
@@ -63,6 +64,7 @@ export async function updateProject(id: string, portfolioId: string, data: Recor
   if (data.summary !== undefined) update.summary = data.summary;
   if (data.description !== undefined) update.description = data.description;
   if (data.coverImageUrl !== undefined) update.coverImageUrl = data.coverImageUrl;
+  if (data.coverImagePublicId !== undefined) update.coverImagePublicId = data.coverImagePublicId;
   if (data.technologies !== undefined) update.technologies = data.technologies;
   if (data.liveUrl !== undefined) update.liveUrl = data.liveUrl;
   if (data.sourceUrl !== undefined) update.sourceUrl = data.sourceUrl;

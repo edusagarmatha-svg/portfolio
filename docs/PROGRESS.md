@@ -33,7 +33,8 @@ Status: In progress (architecture proposed; awaiting approval to scaffold)
 - Prisma schema lives in `apps/api/prisma`.
 - Auth: bcrypt password hashing, JWT in HTTP-only cookie, ownership checks
   on backend, tokenVersion for logout invalidation.
-- Media: Cloudinary with signed uploads via backend.
+- Media: uploaded to a mounted disk volume and served by the API (see the
+  Railway volume migration section).
 - Security: helmet, CORS allowlist, rate limiting, zod validation,
   centralized error handling.
 
@@ -53,7 +54,7 @@ Certification, Service, Testimonial, ContactMessage, SiteSetting.
 5. Profile and About management — completed
 6. Projects and Experience — completed
 7. Skills, Education, and Certifications — completed
-8. Cloudinary media management — completed
+8. Media management (volume-backed) — completed
 9. Contact and optional sections — completed
 10. Settings and SEO — completed
 11. Quality assurance and deployment preparation — completed
@@ -63,7 +64,7 @@ Certification, Service, Testimonial, ContactMessage, SiteSetting.
 5. Profile and About management — not started
 6. Projects and Experience — not started
 7. Skills, Education, and Certifications — not started
-8. Cloudinary media management — not started
+8. Media management (volume-backed) — not started
 9. Contact and optional sections (Services, Testimonials) — not started
 10. Settings and SEO — not started
 11. Quality assurance and deployment — not started
@@ -228,7 +229,7 @@ Awaiting approval to proceed to Milestone 1 (project foundation).
 
 ### Notes / Next
 
-- Milestone 8 will implement Cloudinary media management.
+- Milestone 8 will implement media management.
 
 ## Milestone 8 — Cloudinary Media Management (completed)
 
@@ -249,7 +250,8 @@ Awaiting approval to proceed to Milestone 1 (project foundation).
 
 ### Notes / Next
 
-- Cloudinary credentials must be added to `apps/api/.env` to enable uploads.
+- Superseded: media now lands on a mounted volume, not Cloudinary. See the
+  Railway volume migration section at the end of this document.
 - Milestone 9 will implement contact form and messages inbox.
 
 ## Milestone 9 — Contact and Optional Sections (completed)
@@ -313,7 +315,6 @@ Awaiting approval to proceed to Milestone 1 (project foundation).
 
 ### Remaining / Notes
 
-- Add real Cloudinary credentials to enable uploads.
 - Choose hosting providers and deploy frontend, backend, and database.
 - Expand automated tests for critical flows (auth, ownership, CRUD) in future iterations.
 
@@ -331,3 +332,114 @@ Awaiting approval to proceed to Milestone 1 (project foundation).
 ### Verification
 
 - `npm run typecheck` and `npm run build` (web): passed.
+
+## Media on a Railway Volume, and Single-Service Deployment (2026-11-26)
+### Container defect found by running the image, not building it
+
+The first image built cleanly and then failed on boot: `prisma migrate deploy` died with
+`Could not parse schema engine response`, preceded by `Prisma failed to detect the
+libssl/openssl version to use ... Defaulting to "openssl-1.1.x"`. `node:22-alpine` carries
+no `openssl` package, so Prisma's platform detection falls back to an engine that is not
+in the image. `apk add --no-cache openssl` is now in all three Dockerfile stages — the two
+that run `prisma generate` and the runtime stage that runs `prisma migrate deploy`.
+
+Verified on the rebuilt image, against the compose Postgres with a named volume at `/data`:
+boot applies migrations and listens; `/` and `/admin/projects` serve the SPA as
+`text/html`; `/api/v1` still answers JSON and `/api/v1/nope` still 404s; login succeeds;
+an upload returns `/uploads/<uuid>.png`, lands byte-identical in the volume, and is served
+with `immutable, max-age=31536000` and `Cross-Origin-Resource-Policy: cross-origin`. The
+container was then **destroyed and recreated** on the same volume and the image was still
+served byte-identical — which is the behaviour the whole change exists to produce.
+
+
+Replaces the Cloudinary storage from Milestone 8. Status: implemented and
+verified locally against Postgres; not yet deployed to Railway.
+
+### Why
+
+Uploads now go to a disk volume mounted into the service, so media is owned by
+the deployment rather than a third-party account, and no API credentials are
+needed to accept an upload.
+
+### Storage
+
+- `apps/api/src/lib/storage.ts` is the single place that knows about the
+  upload directory. `UPLOAD_DIR` (default `./uploads`, `/data/uploads` in the
+  container) is resolved to an absolute path and created at boot.
+- Stored filenames are `crypto.randomUUID()` plus an extension derived from the
+  **whitelisted mimetype**, never from the client-supplied filename.
+- `resolveStoredPath()` rejects any `publicId` that is not a bare filename, so
+  the `DELETE /api/v1/admin/media/:publicId` route cannot be walked out of the
+  upload directory. It returns `INVALID_FILE_ID` rather than silently
+  reinterpreting the input.
+- Uploads stream to disk via multer `diskStorage`; files are no longer buffered
+  whole in memory. The 5 MB cap and type whitelist are unchanged.
+- `apps/api/src/lib/cloudinary.ts` and the `cloudinary` dependency are removed,
+  along with the three `CLOUDINARY_*` env vars.
+
+### Serving
+
+- `/uploads` is served by `express.static` with `immutable, max-age=1y`, which
+  is safe because filenames are UUIDs. A missing file returns a JSON 404
+  instead of falling through to the SPA.
+- helmet's `crossOriginResourcePolicy` is set to `cross-origin`; its
+  `same-origin` default blocks images embedded from another origin.
+- In production the API also serves `apps/web/dist` with an index.html
+  fallback for any non-`/api/` path, so the whole app is one service on one
+  origin and production needs no CORS. `WEB_DIST_DIR` points at the bundle;
+  when it is absent the API behaves exactly as before.
+
+### Deletion now actually works
+
+Previously `ImageUpload` discarded the `publicId` the upload returned, so the
+`*PublicId` columns were never written and no asset was ever deleted. The id is
+now threaded through `ImageUpload` → the four admin pages → the validation
+schemas → the services → Prisma. Clearing an image clears its id too. On a
+volume this matters: orphaned files consume real disk.
+
+`mediaUrl()` in `apps/web/src/lib/api.ts` resolves a stored reference for
+rendering. Absolute URLs pass through untouched, so any media still pointing at
+Cloudinary keeps rendering; relative upload paths get the API origin.
+
+### Schema repair (unrelated pre-existing break)
+
+`main` did not compile. The `20261124064425_add_leadership_insights` migration
+creates `Leadership` and `Insight` tables and both services query them, but
+`schema.prisma` declared neither model, so the generated client had no
+`insight` or `leadership` delegate. Both models were reconstructed from the
+migration SQL; `prisma migrate diff` reports no drift against the migrated
+database.
+
+The Prisma CLI moved from devDependencies to dependencies, because the runtime
+container runs `prisma migrate deploy` on start and would otherwise not have it.
+
+### Deployment
+
+- `Dockerfile` — multi-stage: install workspaces, generate the Prisma client,
+  build web then api, then a slim runtime carrying production deps, the
+  compiled API, the migrations and the built SPA.
+- `railway.json` — Dockerfile builder, health check on `/api/v1/health`.
+- Required Railway configuration: a volume mounted at `/data`,
+  `UPLOAD_DIR=/data/uploads`, `DATABASE_URL`, `JWT_SECRET`, and
+  `CORS_ORIGIN` set to the public domain.
+
+### Verification performed
+
+Against a real Postgres, with a real PNG, end to end:
+
+- upload returns a relative `/uploads/<uuid>.png` and the file lands on the
+  volume byte-identical to the source
+- it is served over HTTP with the correct content type, immutable caching and
+  `Cross-Origin-Resource-Policy: cross-origin`
+- traversal attempts (`../.env`, `../../../etc/passwd`) are rejected with
+  `INVALID_FILE_ID`; the local `.env` survived
+- unauthenticated upload and delete are rejected
+- a disallowed mimetype and a 6 MB file are rejected, leaving nothing on disk
+- the relative path and its `publicId` persist through the profile endpoint,
+  while an absolute Cloudinary URL still validates
+- delete removes the file from the volume and is idempotent; the now-missing
+  path serves a JSON 404
+- the API serves the built SPA at `/`, falls back to index.html for
+  `/admin/projects`, serves hashed assets, and still returns JSON for
+  `/api/v1` and a 404 for `/api/v1/nope`
+- `tsc --noEmit` clean for api and web; `vitest` 5/5 passing

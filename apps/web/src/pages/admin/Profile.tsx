@@ -12,6 +12,7 @@ type ProfileForm = {
   introduction: string;
   biography: string;
   profileImageUrl: string;
+  profileImagePublicId: string;
   resumeUrl: string;
   email: string;
   phone: string;
@@ -24,6 +25,7 @@ const empty: ProfileForm = {
   introduction: "",
   biography: "",
   profileImageUrl: "",
+  profileImagePublicId: "",
   resumeUrl: "",
   email: "",
   phone: "",
@@ -45,6 +47,7 @@ export function Profile() {
           introduction: data.introduction ?? "",
           biography: data.biography ?? "",
           profileImageUrl: data.profileImageUrl ?? "",
+          profileImagePublicId: data.profileImagePublicId ?? "",
           resumeUrl: data.resumeUrl ?? "",
           email: data.email ?? "",
           phone: data.phone ?? "",
@@ -133,7 +136,13 @@ export function Profile() {
               <Input className="mt-1.5" value={form.location} onChange={(e) => set("location", e.target.value)} />
             </div>
             <div className="sm:col-span-2">
-              <ImageUpload label="Profile image" value={form.profileImageUrl} onChange={(url) => set("profileImageUrl", url)} />
+              <ImageUpload
+                label="Profile image"
+                value={form.profileImageUrl}
+                onChange={(url, publicId) =>
+                  setForm((f) => ({ ...f, profileImageUrl: url, profileImagePublicId: publicId ?? "" }))
+                }
+              />
             </div>
             <div className="sm:col-span-2">
               <label className="text-sm font-medium">Résumé URL</label>

@@ -13,6 +13,7 @@ type Item = {
   summary: string | null;
   description: string | null;
   coverImageUrl: string | null;
+  coverImagePublicId: string | null;
   technologies: string[];
   liveUrl: string | null;
   sourceUrl: string | null;
@@ -26,6 +27,7 @@ const empty = {
   summary: "",
   description: "",
   coverImageUrl: "",
+  coverImagePublicId: "",
   technologies: "",
   liveUrl: "",
   sourceUrl: "",
@@ -65,6 +67,7 @@ export function ProjectsAdmin() {
       summary: item.summary ?? "",
       description: item.description ?? "",
       coverImageUrl: item.coverImageUrl ?? "",
+      coverImagePublicId: item.coverImagePublicId ?? "",
       technologies: (item.technologies ?? []).join(", "),
       liveUrl: item.liveUrl ?? "",
       sourceUrl: item.sourceUrl ?? "",
@@ -86,6 +89,7 @@ export function ProjectsAdmin() {
       summary: form.summary || null,
       description: form.description || null,
       coverImageUrl: form.coverImageUrl || null,
+      coverImagePublicId: form.coverImagePublicId || null,
       technologies: form.technologies
         .split(",")
         .map((s) => s.trim())
@@ -175,7 +179,13 @@ export function ProjectsAdmin() {
               <Input className="mt-1.5" value={form.technologies} onChange={(e) => set("technologies", e.target.value)} />
             </div>
             <div className="sm:col-span-2">
-              <ImageUpload label="Cover image" value={form.coverImageUrl} onChange={(url) => set("coverImageUrl", url)} />
+              <ImageUpload
+                label="Cover image"
+                value={form.coverImageUrl}
+                onChange={(url, publicId) =>
+                  setForm((f) => ({ ...f, coverImageUrl: url, coverImagePublicId: publicId ?? "" }))
+                }
+              />
             </div>
             <div>
               <label className="text-sm font-medium">Live URL</label>

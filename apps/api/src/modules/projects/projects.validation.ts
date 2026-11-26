@@ -8,6 +8,7 @@ export const projectCreateSchema = z.object({
   summary: z.string().trim().optional().nullable().transform((v) => (v === "" ? null : v)),
   description: z.string().trim().optional().nullable().transform((v) => (v === "" ? null : v)),
   coverImageUrl: z.string().trim().optional().nullable().transform((v) => (v === "" ? null : v)),
+  coverImagePublicId: z.string().trim().optional().nullable().transform((v) => (v === "" ? null : v)),
   technologies: z.array(z.string().trim().min(1)).optional().default([]),
   liveUrl: z.string().trim().optional().nullable().transform((v) => (v === "" ? null : v)),
   sourceUrl: z.string().trim().optional().nullable().transform((v) => (v === "" ? null : v)),
