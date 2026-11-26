@@ -45,22 +45,22 @@ model User {
 }
 
 model Portfolio {
-  id                  String          @id @default(uuid())
-  ownerId             String          @unique
-  owner               User            @relation(fields: [ownerId], references: [id], onDelete: Cascade)
-  slug                String?         @unique
-  fullName            String
-  professionalTitle   String?
-  introduction        String?
-  biography           String?
-  profileImageUrl     String?
+  id                   String   @id @default(uuid())
+  ownerId              String   @unique
+  owner                User     @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  slug                 String?  @unique
+  fullName             String
+  professionalTitle    String?
+  introduction         String?
+  biography            String?
+  profileImageUrl      String?
   profileImagePublicId String?
-  resumeUrl           String?
-  email               String?
-  phone               String?
-  location            String?
-  createdAt           DateTime        @default(now())
-  updatedAt           DateTime        @updatedAt
+  resumeUrl            String?
+  email                String?
+  phone                String?
+  location             String?
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
 
   experiences     Experience[]
   projects        Project[]
@@ -69,25 +69,27 @@ model Portfolio {
   certifications  Certification[]
   services        Service[]
   testimonials    Testimonial[]
+  leadership      Leadership[]
+  insights        Insight[]
   contactMessages ContactMessage[]
   settings        SiteSetting[]
 }
 
 model Experience {
-  id             String           @id @default(uuid())
+  id             String          @id @default(uuid())
   portfolioId    String
-  portfolio      Portfolio        @relation(fields: [portfolioId], references: [id], onDelete: Cascade)
+  portfolio      Portfolio       @relation(fields: [portfolioId], references: [id], onDelete: Cascade)
   company        String
   position       String
   employmentType EmploymentType?
   description    String?
   startDate      DateTime
   endDate        DateTime?
-  isCurrent      Boolean          @default(false)
-  displayOrder   Int              @default(0)
-  status         ContentStatus    @default(DRAFT)
-  createdAt      DateTime         @default(now())
-  updatedAt      DateTime         @updatedAt
+  isCurrent      Boolean         @default(false)
+  displayOrder   Int             @default(0)
+  status         ContentStatus   @default(DRAFT)
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
 
   @@index([portfolioId, displayOrder])
   @@index([portfolioId, status])
@@ -103,8 +105,8 @@ model Project {
   description        String?
   coverImageUrl      String?
   coverImagePublicId String?
-  technologies       String[]  @default([])
-  liveUrl         String?
+  technologies       String[]      @default([])
+  liveUrl            String?
   sourceUrl          String?
   featured           Boolean       @default(false)
   displayOrder       Int           @default(0)
@@ -113,7 +115,7 @@ model Project {
   updatedAt          DateTime      @updatedAt
 
   images ProjectImage[]
-  skills Skill[]       @relation("ProjectSkills")
+  skills Skill[]        @relation("ProjectSkills")
 
   @@unique([portfolioId, slug])
   @@index([portfolioId, displayOrder])
@@ -218,6 +220,38 @@ model Testimonial {
   status        ContentStatus @default(DRAFT)
   createdAt     DateTime      @default(now())
   updatedAt     DateTime      @updatedAt
+
+  @@index([portfolioId, displayOrder])
+  @@index([portfolioId, status])
+}
+
+model Leadership {
+  id           String        @id @default(uuid())
+  portfolioId  String
+  portfolio    Portfolio     @relation(fields: [portfolioId], references: [id], onDelete: Cascade)
+  title        String
+  organization String?
+  description  String?
+  displayOrder Int           @default(0)
+  status       ContentStatus @default(DRAFT)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  @@index([portfolioId, displayOrder])
+  @@index([portfolioId, status])
+}
+
+model Insight {
+  id           String        @id @default(uuid())
+  portfolioId  String
+  portfolio    Portfolio     @relation(fields: [portfolioId], references: [id], onDelete: Cascade)
+  title        String
+  excerpt      String?
+  content      String?
+  displayOrder Int           @default(0)
+  status       ContentStatus @default(DRAFT)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
 
   @@index([portfolioId, displayOrder])
   @@index([portfolioId, status])
